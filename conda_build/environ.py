@@ -129,6 +129,7 @@ def get_git_info(repo):
     parts = output.rsplit('-', 2)
     if len(parts) == 3:
         d.update(dict(zip(keys, parts)))
+    print('>>>', d)
 
     # get the _full_ hash of the current HEAD
     process = Popen(["git", "rev-parse", "HEAD"],
@@ -156,8 +157,10 @@ def get_dict(m=None, prefix=None):
     d.update(python_vars())
     d.update(perl_vars())
     d.update(lua_vars())
+    d.update(r_vars())
 
     if m:
+        print('>>> m')
         d.update(meta_vars(m))
 
     # system
@@ -189,12 +192,15 @@ def python_vars():
         'SP_DIR': get_sp_dir(),
         'PY_VER': get_py_ver(),
         'NPY_VER': get_npy_ver(),
+        'CONDA_PY': config.CONDA_PY,
+        'CONDA_NPY': config.CONDA_NPY,
     }
 
 
 def perl_vars():
     return {
         'PERL_VER': get_perl_ver(),
+        'CONDA_PERL': config.CONDA_PERL,
     }
 
 
@@ -205,9 +211,16 @@ def lua_vars():
             'LUA': lua,
             'LUA_INCLUDE_DIR': get_lua_include_dir(),
             'LUA_VER': get_lua_ver(),
+            'CONDA_LUA': config.CONDA_LUA,
         }
     else:
         return {}
+
+
+def r_vars():
+    return {
+        'CONDA_R': config.CONDA_R,
+    }
 
 
 def meta_vars(meta):
@@ -230,7 +243,7 @@ def meta_vars(meta):
     if external.find_executable('git') and os.path.exists(git_dir):
         git_url = meta.get_value('source/git_url')
 
-        if os.path.exists(git_url):
+        if git_url and os.path.exists(git_url):
             # If git_url is a relative path instead of a url, convert it to an abspath
             git_url = normpath(join(meta.path, git_url))
 

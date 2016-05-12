@@ -28,6 +28,8 @@ except ImportError:
 from conda_build.config import config
 from conda_build.utils import comma_join
 
+from conda_build import meta
+
 def ns_cfg():
     # Remember to update the docs of any of this changes
     plat = cc.subdir
@@ -310,7 +312,17 @@ def handle_config_version(ms, ver):
     return MatchSpec('%s %s*' % (ms.name, ver))
 
 
-class MetaData(object):
+def MetaData(path):
+    assert isdir(path)
+    filename = next((f for f in ('meta.yaml', 'conda.yaml') if isfile(join(path, f))), False)
+    if not filename:
+        sys.exit("Error: meta.yaml or conda.yaml not found in %s" % path)
+    m = meta.MetaData.from_file(join(path, filename))
+    meta.set_context(m)
+    return m
+
+
+class _MetaData(object):
 
     def __init__(self, path):
         assert isdir(path)
@@ -672,5 +684,6 @@ if __name__ == '__main__':
     from pprint import pprint
     from os.path import expanduser
 
-    m = MetaData(expanduser('~/conda-recipes/pycosat'))
+    m = _MetaData(expanduser('~/continuum/conda-packages/centos5/ansible'))
     pprint(m.info_index())
+    print(m.get_value('source/git_url'))

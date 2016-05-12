@@ -364,15 +364,18 @@ def get_build_metadata(m):
         with open(join(src_dir, '__conda_version__.txt')) as f:
             version = f.read().strip()
             print("Setting version from __conda_version__.txt: %s" % version)
-            m.meta['package']['version'] = version
+            # m.meta['package']['version'] = version
+            m.package.version = version
     if exists(join(src_dir, '__conda_buildnum__.txt')):
         with open(join(src_dir, '__conda_buildnum__.txt')) as f:
             build_number = f.read().strip()
             print("Setting build number from __conda_buildnum__.txt: %s" %
                   build_number)
-            m.meta['build']['number'] = build_number
+            # m.meta['build']['number'] = build_number
+            m.build.number = build_number
     if exists(join(src_dir, '__conda_buildstr__.txt')):
         with open(join(src_dir, '__conda_buildstr__.txt')) as f:
             buildstr = f.read().strip()
             print("Setting version from __conda_buildstr__.txt: %s" % buildstr)
-            m.meta['build']['string'] = buildstr
+            # m.meta['build']['string'] = buildstr
+            m.build.string = buildstr

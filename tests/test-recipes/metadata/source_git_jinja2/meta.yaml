@@ -2,15 +2,15 @@
 # including use cases involving expressions such as FOO[:7] or FOO.replace(...)
 package:
   name: conda-build-test-source-git-jinja2
-  version: {{ GIT_DESCRIBE_TAG.replace('v', '') }}
+  version: "@{GIT_DESCRIBE_TAG|replace('v','')}"
 
 source:
   git_url: https://github.com/conda/conda-build
   git_tag: 1.8.1
 
 build:
-  number: {{ GIT_DESCRIBE_NUMBER|int }}
-  string: py{{ CONDA_PY }}_{{ GIT_DESCRIBE_NUMBER|int }}_g{{ GIT_FULL_HASH[:7] }}
+  number: '@{GIT_DESCRIBE_NUMBER}'
+  string: 'py{{ CONDA_PY }}_@{GIT_DESCRIBE_NUMBER}_g@{GIT_FULL_HASH[:7]}'
 
 requirements:
   build:
