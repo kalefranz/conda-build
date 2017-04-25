@@ -372,6 +372,9 @@ def write_link_json(m, config):
         executable_paths = m.get_value("build/preferred_env_executable_paths")
         if executable_paths:
             preferred_env_dict["executable_paths"] = executable_paths
+        softlink_paths = m.get_value("build/preferred_env_softlink_paths")
+        if softlink_paths:
+            preferred_env_dict["softlink_paths"] = softlink_paths
         package_metadata["preferred_env"] = preferred_env_dict
     if package_metadata:
         # The original name of this file was info/package_metadata_version.json, but we've

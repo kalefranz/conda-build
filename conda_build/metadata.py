@@ -239,6 +239,7 @@ default_structs = {
     'build/skip_compile_pyc': list,
     'build/preferred_env': text_type,
     'build/preferred_env_executable_paths': list,
+    'build/preferred_env_softlink_paths': list,
     'app/own_environment': bool
 }
 
@@ -312,6 +313,7 @@ FIELDS = {
               'script_env', 'always_include_files', 'skip', 'msvc_compiler',
               'pin_depends', 'include_recipe',  # pin_depends is experimental still
               'preferred_env', 'preferred_env_executable_paths',
+              'preferred_env_softlink_paths',
               ],
     'requirements': ['build', 'run', 'conflicts'],
     'app': ['entry', 'icon', 'summary', 'type', 'cli_opts',
