@@ -141,8 +141,8 @@ def update_index(dir_path, force=False, check_md5=False, remove=True, lock=None,
             info = index[fn]
             if 'timestamp' not in info and 'mtime' in info:
                 info['timestamp'] = int(info['mtime'])
-            if info['timestamp'] > 253402300799:  # 9999-12-31
-                info['timestamp'] /= 1000  # convert milliseconds to seconds; see #1988
+            # if info['timestamp'] > 253402300799:  # 9999-12-31
+            #     info['timestamp'] /= 1000  # convert milliseconds to seconds; see #1988
             for varname in 'arch', 'mtime', 'platform', 'ucs':
                 try:
                     del info[varname]
