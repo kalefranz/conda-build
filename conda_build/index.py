@@ -153,7 +153,7 @@ def update_index(dir_path, force=False, check_md5=False, remove=True, lock=None,
                 info['depends'] = info['requires']
 
         repodata = {'packages': index, 'info': {}}
-        # write_repodata(repodata, dir_path, lock=lock, locking=locking, timeout=timeout)
+        write_repodata(repodata, dir_path, lock=lock, locking=locking, timeout=timeout)
 
         if channel_name:
             extra_paths = {}
