@@ -394,7 +394,10 @@ def write_about_json(m, config):
         bin_path = os.path.join(sys.prefix, "Scripts\\conda.exe" if utils.on_win else "bin/conda")
 
         # for sake of reproducibility, record some conda info
-        conda_info = subprocess.check_output([bin_path, 'info', '--json', '-s'])
+        from conda.gateways.subprocess import subprocess_call
+        result = subprocess_call([bin_path, 'info', '--json', '-s'])
+        conda_info = result.stdout
+        # conda_info = subprocess.check_output([bin_path, 'info', '--json', '-s'])
         if hasattr(conda_info, 'decode'):
             conda_info = conda_info.decode(utils.codec)
         conda_info = json.loads(conda_info)
