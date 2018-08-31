@@ -516,6 +516,21 @@ def _extract_and_remove_vc_feature(record):
     return vc_version
 
 
+REMOVALS = {
+    "win-64": (
+        "vc-14.1-h21ff451_3.tar.bz2",
+        "vc-14.1-h0510ff6_3.tar.bz2",
+        "vs2015_runtime-15.5.2-3.tar.bz2",
+        "vs2017_win-32-15.5.2-1.tar.bz2",
+        "vs2017_win-64-15.5.2-1.tar.bz2",
+        "vs2017_win-64-15.5.2-h55c1224_3.tar.bz2",
+        "vs2017_win-32-15.5.2-0.tar.bz2",
+        "vs2017_win-64-15.5.2-0.tar.bz2",
+        "vs2017_win-64-15.5.2-h17c34da_3.tar.bz2",
+    ),
+}
+
+
 def _patch_repodata(index, subdir):
     # This patch requested by Stan
     numbas = (fn for fn in index if fn.startswith("numba-0.36.1"))
@@ -578,3 +593,7 @@ def _patch_repodata(index, subdir):
         if record['name'] == 'conda-env':
             if not any(d.startswith('python') for d in record['depends']):
                 record['namespace'] = 'python'
+
+    for fn in REMOVALS.get(subdir, ()):
+        popped = index.pop(fn, None)
+
